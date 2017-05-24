@@ -34,7 +34,7 @@ crossed = (ev) => {
   else
   thing.crossed = true
   saveThing(thing)
-  //this.crossThing(thing)
+  //crossThing(thing)
 }
 
 render() {
@@ -42,7 +42,7 @@ render() {
 
     return (
         <li className="Thing">
-        <input type="checkbox" value="on" onChange={this.crossed} />
+        <input type="checkbox" value="on" onChange={this.crossed} checked={thing.crossed} />
           <div className="details">
             <ContentEditable 
             className="name" 

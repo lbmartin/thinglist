@@ -48,13 +48,6 @@ class App extends Component {
     this.setState({ things })
   }
 
-  // crossThing = (thing) => {
-  //   console.log('crap')
-  //   const things = {...this.state.things}
-  //   things[thing.crossed] = true
-  //   this.setState({ things })
-  // }
-
   render() {
     const actions = {
       saveThing: this.saveThing,
