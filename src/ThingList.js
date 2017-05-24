@@ -12,7 +12,11 @@ const ThingList = (props) => {
                 Object
                   .keys(props.things)
                   .sort(sortThings)
-                  .map(thingId => <Thing {...props} key={thingId} thing={props.things[thingId]} onChange={props.onChange} />) 
+                  .map(thingId => <Thing {...props} 
+                                          key={thingId} 
+                                          thing={props.things[thingId]}
+                                          onChange={props.onChange} 
+                                           />) 
             }
         </ul>
     )
@@ -20,3 +24,5 @@ const ThingList = (props) => {
 }
 
 export default ThingList
+
+// onChange={props.onChange}

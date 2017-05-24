@@ -1,46 +1,51 @@
 import React, { Component } from 'react';
+
 import './App.css';
 import Header from './Header'
 import ThingList from './ThingList'
 import AddButton from './AddButton'
-import Actions from './Actions'
+import base from './base'
 
 class App extends Component {
+  componentWillMount() {
+    this.ref = base.syncState(
+      'things',
+      {
+        context: this,
+        state: 'things'
+      }
+    )
+  }
 
-  constructor(){
-    super()
-    this.thingCounter = 0
-    this.state = {
-      things: {},
-    }
-    this.addThing = this.addThing.bind(this)
+  state = {
+    things: {}
   }
 
   thing() {
     return {
       id: `thing-${Date.now()}`,
-      name: '',
+      name: 'Test',
+      crossed: true,
     }
-  }  
+  }
 
-saveThing = (thing) => {
-  const things = {...this.state.things}
-  things[things.Id] = thing
-  this.setState({ things })
-}
-
-  addThing(ev){
-    ev.preventDefault()
-    let id = this.thingCounter++
+  addThing = () => {
     const things = {...this.state.things}
-    things[id] = {id: id, name: "New Thing"}
+    const thing = this.thing()
+    things[thing.id] = thing
+    this.setState({ things })
+  }
+
+  saveThing = (thing) => {
+    const things = {...this.state.things}
+    things[thing.id] = thing
     this.setState({ things })
   }
 
   removeThing = (thing) => {
     const things = {...this.state.things}
-    delete things[thing.id]
-    this.setState ({ things })
+    things[thing.id] = null
+    this.setState({ things })
   }
 
   render() {
@@ -51,12 +56,13 @@ saveThing = (thing) => {
     return (
       <div className="App">
         <Header />
-        <AddButton addThing={this.addThing}/>
-        <ThingList things={this.state.things} 
-                    saveThing={this.saveThing} 
-                    {...actions} />
+        <AddButton addThing={this.addThing} />
+        <ThingList
+          things={this.state.things}
+          {...actions}
+        />
       </div>
-    )
+    );
   }
 }
 

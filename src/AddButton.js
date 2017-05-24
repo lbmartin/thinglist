@@ -1,13 +1,10 @@
 import React from "react"
 import './AddButton.css'
 
-const AddButton = (props) => {
-    return(
-      <div>
-        <button className="logout">Sign Out</button>
-        <button className="add-thing" onClick={props.addThing}>Add Thing</button>
-      </div>
-    )
+const AddButton = ({ addThing }) => {
+
+  return <button className="add-thing" onClick={addThing}>Add Thing</button>
+
 }
 
 export default AddButton
