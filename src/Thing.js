@@ -1,29 +1,28 @@
-import React from 'react'
+import React, {Component} from 'react'
 import ContentEditable from 'react-contenteditable'
+import Actions from './Actions'
 
 import './Thing.css'
 
 
-const Thing = ({ thing, saveThing }) => {
-  const updateName = (ev) => {
+class Thing extends Component {
+  updateName = (ev) => {
+    const { thing, saveThing } = this.props
     thing.name = ev.currentTarget.value
     saveThing(thing)
   }
-
+render() {
+  const { thing, saveThing, removeThing } = this.props
     return (
         <li className="Thing" contentEditable>
         <input type="checkbox" value="on" />
           <div className="details">
-            <ContentEditable className="name" html={thing.name} onChange={updateName} />
-            <span className="actions">
-              <button className="remove">
-                <i className="fa fa-trash-o"></i>
-              </button>
-            </span>
+            <ContentEditable className="name" html={thing.name} onChange={this.updateName} />
+            <Actions thing={thing} removeThing={removeThing} />
           </div>
         </li>
     )
-
+  }
 }
 
 export default Thing

@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Header'
 import ThingList from './ThingList'
 import AddButton from './AddButton'
+import Actions from './Actions'
 
 class App extends Component {
 
@@ -14,6 +15,13 @@ class App extends Component {
     }
     this.addThing = this.addThing.bind(this)
   }
+
+  thing() {
+    return {
+      id: `thing-${Date.now()}`,
+      name: '',
+    }
+  }  
 
 saveThing = (thing) => {
   const things = {...this.state.things}
@@ -29,12 +37,24 @@ saveThing = (thing) => {
     this.setState({ things })
   }
 
+  removeThing = (thing) => {
+    const things = {...this.state.things}
+    delete things[thing.id]
+    this.setState ({ things })
+  }
+
   render() {
+    const actions = {
+      saveThing: this.saveThing,
+      removeThing: this.removeThing,
+    }
     return (
       <div className="App">
         <Header />
         <AddButton addThing={this.addThing}/>
-        <ThingList things={this.state.things} saveThing={this.saveThing} />
+        <ThingList things={this.state.things} 
+                    saveThing={this.saveThing} 
+                    {...actions} />
       </div>
     )
   }
