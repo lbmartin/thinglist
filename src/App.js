@@ -25,7 +25,7 @@ class App extends Component {
     return {
       id: `thing-${Date.now()}`,
       name: 'Test',
-      crossed: true,
+      crossed: false,
     }
   }
 
@@ -47,6 +47,13 @@ class App extends Component {
     things[thing.id] = null
     this.setState({ things })
   }
+
+  // crossThing = (thing) => {
+  //   console.log('crap')
+  //   const things = {...this.state.things}
+  //   things[thing.crossed] = true
+  //   this.setState({ things })
+  // }
 
   render() {
     const actions = {

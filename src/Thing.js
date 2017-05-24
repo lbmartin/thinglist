@@ -26,12 +26,23 @@ blurOnEnter = (ev) => {
   }
 }
 
+crossed = (ev) => {
+  const { thing, saveThing, crossThing } = this.props
+  console.log('fun')
+  if(thing.crossed===true)
+  thing.crossed = false
+  else
+  thing.crossed = true
+  saveThing(thing)
+  //this.crossThing(thing)
+}
+
 render() {
   const { thing, removeThing } = this.props
 
     return (
         <li className="Thing">
-        <input type="checkbox" value="on" />
+        <input type="checkbox" value="on" onChange={this.crossed} />
           <div className="details">
             <ContentEditable 
             className="name" 
