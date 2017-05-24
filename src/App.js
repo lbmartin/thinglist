@@ -15,6 +15,12 @@ class App extends Component {
     this.addThing = this.addThing.bind(this)
   }
 
+saveThing = (thing) => {
+  const things = {...this.state.things}
+  things[things.Id] = thing
+  this.setState({ things })
+}
+
   addThing(ev){
     ev.preventDefault()
     let id = this.thingCounter++
@@ -28,7 +34,7 @@ class App extends Component {
       <div className="App">
         <Header />
         <AddButton addThing={this.addThing}/>
-        <ThingList things={this.state.things}/>
+        <ThingList things={this.state.things} saveThing={this.saveThing} />
       </div>
     )
   }
