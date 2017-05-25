@@ -21,7 +21,34 @@ class App extends Component {
   }
 
   state = {
-    things: {}
+    things: {},
+    uid: null,
+  }
+
+  componentWillMount() {
+    auth.onAuthStateChanged(
+      (user) => {
+          if(user){
+            this.authHandler({ user })
+        }
+      }
+    )
+  }
+
+  setupThings() {
+    this.ref = base.syncState(
+      'things',
+      {
+        context: this,
+        state: 'things'
+      }
+    )
+  }
+
+  authHandler = (authData) => {
+    this.setState({ uid: authData.user.uid})
+    this.setupThings()
+
   }
 
   thing() {
@@ -53,8 +80,27 @@ class App extends Component {
   }
 
   signOut = () => {
-    auth.signOut()
+    auth
+      .signOut()
+      .then(() => this.setState({ uid: null }))
+  }
 
+  renderThings() {
+    const actions = {
+      saveThing: this.saveThing,
+      removeThing: this.removeThing,
+    }
+    return(
+      <div>
+        <SignOut signOut={this.signOut} />
+        
+        <AddButton addThing={this.addThing} />
+        <ThingList
+          things={this.state.things}
+          {...actions}
+        />
+      </div>
+    )
   }
 
   render() {
@@ -65,13 +111,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <SignOut signOut={this.signOut} />
-        <SignIn />
-        <AddButton addThing={this.addThing} />
-        <ThingList
-          things={this.state.things}
-          {...actions}
-        />
+        { this.state.uid ? this.renderThings() : <SignIn authHandler={this.authHandler} /> }
       </div>
     );
   }
